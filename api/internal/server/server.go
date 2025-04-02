@@ -1,6 +1,8 @@
 package server
 
 import (
+	"sync"
+
 	"api/internal/database"
 
 	"github.com/gofiber/fiber/v2"
@@ -11,6 +13,7 @@ type FiberServer struct {
 	db      database.Service
 	Clients map[string]string
 	Rooms   map[string][]string
+	mu      sync.Mutex
 }
 
 func New() *FiberServer {
