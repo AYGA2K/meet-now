@@ -1,15 +1,16 @@
 package server
 
 import (
-	"github.com/gofiber/fiber/v2"
-
 	"api/internal/database"
+
+	"github.com/gofiber/fiber/v2"
 )
 
 type FiberServer struct {
 	*fiber.App
-
-	db database.Service
+	db      database.Service
+	Clients map[string]string
+	Rooms   map[string][]string
 }
 
 func New() *FiberServer {
@@ -18,8 +19,9 @@ func New() *FiberServer {
 			ServerHeader: "api",
 			AppName:      "api",
 		}),
-
-		db: database.New(),
+		Clients: make(map[string]string),
+		Rooms:   make(map[string][]string),
+		db:      database.New(),
 	}
 
 	return server
